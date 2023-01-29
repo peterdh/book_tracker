@@ -6,9 +6,10 @@ const Book = ({ book, updateBooks }) => {
 
     const [shelf, setShelf] = useState('');
 
+    /*
     useEffect(() => {
       setShelf(book.shelf);
-    }, [book]);
+    }, [book]); */
 
     return (
 
@@ -24,9 +25,9 @@ const Book = ({ book, updateBooks }) => {
                             }}
                           ></div>
                           <div className="book-shelf-changer">
-                            <select value={shelf} onChange={(event) => {
+                            <select value={book.shelf} onChange={(event) => {
                               //setShelf(event.target.value); 
-                              updateBooks(book, shelf);
+                              updateBooks(book, event.target.value);
                             }}>
                               <option value="none" disabled>
                                 Move to...
