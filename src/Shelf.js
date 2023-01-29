@@ -8,7 +8,7 @@ const Shelf = ({ books, updateBooks, shelfProperty, shelfTitle}) => {
     // filter books --> see if they match shelfProperty
 
     const filteredBooks = books.filter((book) => book.shelf === shelfProperty);
-    const bookComponents = filteredBooks.map(book => <Book book={book} updateBooks={updateBooks}/>)
+    const bookComponents = filteredBooks.map(book => <Book key={book.id} book={book} updateBooks={updateBooks}/>)
 
     return (
 

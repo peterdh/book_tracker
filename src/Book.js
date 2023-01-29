@@ -7,17 +7,11 @@ const Book = ({ book, updateBooks }) => {
     const [shelf, setShelf] = useState('');
 
     useEffect(() => {
-        // need some kind of function that updates the database w/value of changed shelf
-      
-        updateBooks(book, shelf);
-
-    }, [shelf, book, updateBooks]);
-
+      setShelf(book.shelf);
+    }, [book]);
 
     return (
 
-
-        
               <li>
                 <div className="book">
                   <div className="book-top">
@@ -30,7 +24,10 @@ const Book = ({ book, updateBooks }) => {
                             }}
                           ></div>
                           <div className="book-shelf-changer">
-                            <select value={shelf} onChange={e => setShelf(e.target.value)}>
+                            <select value={shelf} onChange={(event) => {
+                              //setShelf(event.target.value); 
+                              updateBooks(book, shelf);
+                            }}>
                               <option value="none" disabled>
                                 Move to...
                               </option>
@@ -39,7 +36,6 @@ const Book = ({ book, updateBooks }) => {
                               </option>
                               <option value="wantToRead">Want to Read</option>
                               <option value="read">Read</option>
-                              <option value="none">None</option>
                             </select>
                           </div>
                         </div>
