@@ -21,6 +21,7 @@ function App() {
   const updateBooks = (book, shelf) => {
 
     BooksAPI.update(book, shelf);
+    setBooks(BooksAPI.getAll());
 
   };
 

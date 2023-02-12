@@ -6,11 +6,6 @@ const Book = ({ book, updateBooks }) => {
 
     const [shelf, setShelf] = useState('');
 
-    /*
-    useEffect(() => {
-      setShelf(book.shelf);
-    }, [book]); */
-
     return (
 
               <li>
@@ -28,6 +23,8 @@ const Book = ({ book, updateBooks }) => {
                             <select value={book.shelf} onChange={(event) => {
                               //setShelf(event.target.value); 
                               updateBooks(book, event.target.value);
+                              //setShelf(book.shelf);
+                              
                             }}>
                               <option value="none" disabled>
                                 Move to...
