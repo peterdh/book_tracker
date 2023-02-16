@@ -1,7 +1,9 @@
 import "./App.css";
 import Shelf from "./Shelf.js";
+import SearchBar from "./SearchBar.js";
 import { useState, useEffect } from "react";
 import * as BooksAPI from "./BooksAPI";
+import { Route, Routes, Link } from "react-router-dom";
 
 function App() {
 
@@ -10,29 +12,54 @@ function App() {
 
   
   useEffect(() => {
-    const getBooks = async() => {
-      const res = await BooksAPI.getAll();
-      setBooks(res);
-    };
-    
     getBooks();
   }, []);
+  
+
+  const getBooks = async() => {
+    const res = await BooksAPI.getAll();
+    setBooks(res);
+  }
 
   const updateBooks = (book, shelf) => {
 
     BooksAPI.update(book, shelf);
-    setBooks(BooksAPI.getAll());
+    getBooks();
 
   };
 
 
   return (
 
-    <div>
-      <Shelf books={books} updateBooks={updateBooks} shelfProperty={"currentlyReading"} shelfTitle={"Currently Reading"}></Shelf>
-      <Shelf books={books} updateBooks={updateBooks} shelfProperty={"wantToRead"} shelfTitle={"Want to Read"}></Shelf>
-      <Shelf books={books} updateBooks={updateBooks} shelfProperty={"read"} shelfTitle={"Read"}></Shelf>
-    </div>
+    <Routes>
+
+      <Route path="/" element= {
+        <div>
+          <Shelf books={books} updateBooks={updateBooks} shelfProperty={"currentlyReading"} shelfTitle={"Currently Reading"}/>
+          <Shelf books={books} updateBooks={updateBooks} shelfProperty={"wantToRead"} shelfTitle={"Want to Read"}/>
+          <Shelf books={books} updateBooks={updateBooks} shelfProperty={"read"} shelfTitle={"Read"}/>
+          <div className="open-search">
+            <Link to="/create"></Link>
+          </div>
+        </div>
+      }>
+
+      </Route>
+
+      <Route path="/search" element={
+        <SearchBar />
+
+      }>
+        
+
+      </Route>
+
+
+
+
+    </Routes>
+
+    
     
   );
 }
