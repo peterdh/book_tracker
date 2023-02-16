@@ -11,8 +11,8 @@ const SearchBar = ({books, updateBooks}) => {
     const [searchResults, setSearchResults] = useState([]);
 
     const handleSearch = async(event) => {
-      query = event.target.value;
-      setQuery(query);
+      //query = event.target.value;
+      setQuery(event.target.value);
       if (query === "") {
         setSearchResults([]);
       }
