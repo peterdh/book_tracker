@@ -7,10 +7,8 @@ import { Route, Routes, Link } from "react-router-dom";
 
 function App() {
 
-  const [showSearchPage, setShowSearchpage] = useState(false);
   const [books, setBooks] = useState([]);
 
-  
   useEffect(() => {
     getBooks();
   }, []);
@@ -35,11 +33,14 @@ function App() {
 
       <Route path="/" element= {
         <div>
+          <div className="list-books-title">
+            <h1>MyReads</h1>
+          </div>
           <Shelf books={books} updateBooks={updateBooks} shelfProperty={"currentlyReading"} shelfTitle={"Currently Reading"}/>
           <Shelf books={books} updateBooks={updateBooks} shelfProperty={"wantToRead"} shelfTitle={"Want to Read"}/>
           <Shelf books={books} updateBooks={updateBooks} shelfProperty={"read"} shelfTitle={"Read"}/>
           <div className="open-search">
-            <Link to="/create"></Link>
+            <Link to="/search"></Link>
           </div>
         </div>
       }>
@@ -47,7 +48,7 @@ function App() {
       </Route>
 
       <Route path="/search" element={
-        <SearchBar />
+        <SearchBar books={books} updateBooks={updateBooks}/>
 
       }>
         

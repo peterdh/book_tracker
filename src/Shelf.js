@@ -8,7 +8,6 @@ const Shelf = ({ books, updateBooks, shelfProperty, shelfTitle}) => {
     // filter books --> see if they match shelfProperty
 
     const filteredBooks = books.filter((book) => book.shelf === shelfProperty);
-    const bookComponents = filteredBooks.map(book => <Book key={book.id} book={book} updateBooks={updateBooks}/>)
 
     return (
 
@@ -17,7 +16,7 @@ const Shelf = ({ books, updateBooks, shelfProperty, shelfTitle}) => {
                 <h2 className="bookshelf-title">{shelfTitle}</h2>
                     <div className="bookshelf-books">
                         <ol className="books-grid">
-                            <li>{bookComponents}</li>
+                            {filteredBooks.map((book) => (<Book key={book.id} book={book} updateBooks={updateBooks}/>))}
                         </ol>
                     </div>
             </div>
