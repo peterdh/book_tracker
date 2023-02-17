@@ -1,4 +1,5 @@
 import "./App.css";
+import PropTypes from "prop-types";
 
 const Book = ({ book, updateBooks }) => {
 
@@ -12,7 +13,7 @@ const Book = ({ book, updateBooks }) => {
                 style={{
                 width: 128,
                 height: 193,
-                backgroundImage: book.imageURL}}
+                backgroundImage: `url("${book.imageLinks.thumbnail}")`}}
             ></div>
             <div className="book-shelf-changer">
               <select value={book.shelf} onChange={(event) => {updateBooks(book, event.target.value);}}>
@@ -33,6 +34,11 @@ const Book = ({ book, updateBooks }) => {
     );
 
 
+}
+
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  updateBooks: PropTypes.func.isRequired,
 }
 
 export default Book;

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect} from "react";
 import * as BooksAPI from "./BooksAPI";
 import Book from "./Book";
-
+import PropTypes from "prop-types";
 
 const SearchBar = ({books, updateBooks}) => {
 
@@ -11,7 +11,7 @@ const SearchBar = ({books, updateBooks}) => {
     const [searchResults, setSearchResults] = useState([]);
 
     const handleSearch = async(event) => {
-      //query = event.target.value;
+
       setQuery(event.target.value);
       if (query === "") {
         setSearchResults([]);
@@ -23,13 +23,27 @@ const SearchBar = ({books, updateBooks}) => {
       
     }
 
+    const booksWithCorrectShelves = searchResults.map((searchBook) => {
+      
+      const bookFound = books.find((book) => book.id === searchBook.id);
+      if (bookFound) {
+        searchBook.shelf = bookFound.shelf;
+      } else {
+        searchBook.shelf = 'none';
+      }
+        return searchBook;
+    });
+
+    console.log(booksWithCorrectShelves);
+
+
     return (
 
         <div className="search-books">
           <div className="search-books-bar">
-            <div className="close-search">
-              <Link to="/">Close</Link>
-            </div>
+            <Link to='/' className='close-search'>
+              Close
+            </Link>
             <div className="search-books-input-wrapper">
               <input
                 type="text"
@@ -41,11 +55,17 @@ const SearchBar = ({books, updateBooks}) => {
           </div>
           <div className="search-books-results">
             <ol className="books-grid">
-              {searchResults.map((book) => (<Book key={book.id} book={book} updateBooks={updateBooks} />))}
+              {booksWithCorrectShelves.map((book) => (<Book key={book.id} book={book} updateBooks={updateBooks} />))}
             </ol>
           </div>
         </div>
     );
 };
+
+SearchBar.propTypes = {
+  books: PropTypes.array.isRequired,
+  updateBooks: PropTypes.func.isRequired,
+}
+
 
 export default SearchBar;
