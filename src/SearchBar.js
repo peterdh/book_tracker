@@ -10,16 +10,25 @@ const SearchBar = ({books, updateBooks}) => {
     const [query, setQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
-    const handleSearch = async(event) => {
+    const handleSearch = (event) => {
 
       setQuery(event.target.value);
-      if (query === "") {
-        setSearchResults([]);
-      }
-      else {
-        const res = await BooksAPI.search(query);
-        setSearchResults(res);
-      }
+
+      BooksAPI.search(query).then((results) => {
+
+        if (event.target.value === "" || results?.length === 0 || books.error) {
+          return setSearchResults([]);
+        }
+
+        setSearchResults(results);
+        //console.log(searchResults);
+
+
+
+      }).catch((error) => {
+        console.log("error:", error)
+      });
+     
       
     }
 
@@ -34,9 +43,6 @@ const SearchBar = ({books, updateBooks}) => {
         return searchBook;
     });
 
-    console.log(booksWithCorrectShelves);
-
-
     return (
 
         <div className="search-books">
@@ -49,13 +55,13 @@ const SearchBar = ({books, updateBooks}) => {
                 type="text"
                 placeholder="Search by title, author, or ISBN"
                 value={query}
-                onChange={(event) => handleSearch(event)}
+                onChange={handleSearch}
               />
             </div>
           </div>
           <div className="search-books-results">
             <ol className="books-grid">
-              {booksWithCorrectShelves.map((book) => (<Book key={book.id} book={book} updateBooks={updateBooks} />))}
+              {searchResults.length > 0 ? (booksWithCorrectShelves.map((book) => (<Book key={book.id} book={book} updateBooks={updateBooks} />))) : (<h1></h1>)}
             </ol>
           </div>
         </div>
