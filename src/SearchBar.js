@@ -23,8 +23,6 @@ const SearchBar = ({books, updateBooks}) => {
         setSearchResults(results);
         //console.log(searchResults);
 
-
-
       }).catch((error) => {
         console.log("error:", error)
       });
